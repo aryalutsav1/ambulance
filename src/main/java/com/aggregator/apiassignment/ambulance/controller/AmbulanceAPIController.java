@@ -1,5 +1,6 @@
 package com.aggregator.apiassignment.ambulance.controller;
 
+import com.aggregator.apiassignment.ambulance.services.Ambulance;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AmbulanceAPIController {
 
     @PostMapping(value = "")
-    public String ping(){
-        return "This is a ping test and it's working";
+    public Ambulance getAmbulance(){
+
+        Ambulance ambulance=new Ambulance();
+        return ambulance;
     }
 
     @PostMapping(value = "/API/v1/ambulance")
