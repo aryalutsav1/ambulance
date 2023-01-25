@@ -1,4 +1,4 @@
-package com.aggregator.apiassignment.ambulance.services;
+package com.aggregator.apiassignment.ambulance.model;
 
 import lombok.*;
 
@@ -9,8 +9,9 @@ import lombok.*;
 @EqualsAndHashCode
 public class AmbulanceDetails {
     private String category;
-    private boolean isSmart;
+    private boolean isSmartAmbulance;
     private boolean hasOxygenCylinder;
     private double ratePerMile;
     private double serviceCharge;
+
 }

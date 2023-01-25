@@ -1,4 +1,4 @@
-package com.aggregator.apiassignment.ambulance.services;
+package com.aggregator.apiassignment.ambulance.model;
 
 import lombok.*;
 
