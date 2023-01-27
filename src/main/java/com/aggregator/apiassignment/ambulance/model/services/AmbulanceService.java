@@ -1,22 +1,15 @@
 package com.aggregator.apiassignment.ambulance.model.services;
 
-import com.aggregator.apiassignment.ambulance.model.AddressOfAmbulance;
+import com.aggregator.apiassignment.ambulance.exception.AmbulanceNotFoundException;
 import com.aggregator.apiassignment.ambulance.model.Ambulance;
-import com.aggregator.apiassignment.ambulance.model.AmbulanceDetails;
-import com.aggregator.apiassignment.ambulance.model.ContactDetails;
 import com.aggregator.apiassignment.ambulance.model.dtos.AmbulancesDto;
 import com.aggregator.apiassignment.ambulance.repository.AmbulanceRepository;
-import org.apache.tomcat.jni.Address;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AmbulanceService {
@@ -29,10 +22,16 @@ public class AmbulanceService {
         return ambulanceRepository.findAll();
     }
 
-    public Optional<Ambulance> getAmbulanceDetail(Long ambulanceId) {
+    public Ambulance getAmbulanceDetail(Long ambulanceId) {
 
-        Ambulance ambulance = new Ambulance("Patan Express", "Patan Hospital", 65.65, 39.39, "Lalitpur", true, LocalDateTime.now());
-        return Optional.of(ambulance);
+        Optional<Ambulance> optionalAmbulance = ambulanceRepository.findById(ambulanceId);
+        if(optionalAmbulance.isPresent()) {
+            return optionalAmbulance.get();
+        }else {
+            throw new AmbulanceNotFoundException(String.format("The ambulance with Id %d is not present in database",ambulanceId),404);
+        }
+
+
     }
 
     public Ambulance createAmbulance(AmbulancesDto ambulancesDto) {
@@ -64,6 +63,12 @@ public class AmbulanceService {
     }
 
     public void deleteAmbulance(Long ambulanceID) {
-        ambulanceRepository.deleteById(ambulanceID);
+        try{
+            ambulanceRepository.deleteById(ambulanceID);
+        }catch (EmptyResultDataAccessException ex){
+            throw new AmbulanceNotFoundException(String.format("Delete function cannot be operated because the id %d is not present in database",
+                    ambulanceID),404);
+        }
+
     }
 }

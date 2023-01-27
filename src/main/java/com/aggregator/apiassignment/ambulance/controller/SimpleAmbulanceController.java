@@ -29,6 +29,11 @@ public class SimpleAmbulanceController {
         Iterable<Ambulance> ambulanceList = ambulanceService.getAmbulanceList();
         return ResponseEntity.status(HttpStatus.OK).body(ambulanceList);
     }
+    @GetMapping(value = "/ambulance/{id}")
+    public ResponseEntity<Ambulance> getAmbulanceDetail(@PathVariable(value = "id") Long ambulanceId){
+        Ambulance ambulance = ambulanceService.getAmbulanceDetail(ambulanceId);
+        return ResponseEntity.status(HttpStatus.OK).body(ambulance);
+    }
 
 
     @PostMapping(value = "/ambulance")
