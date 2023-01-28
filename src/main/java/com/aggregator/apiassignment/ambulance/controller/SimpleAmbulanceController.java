@@ -8,11 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
+//import org.springframework.web.bind.annotation.Api;
 import javax.validation.Valid;
 
 @RestController
+//@Controller(value = "My Custom Controller Name")
+//@Controller(name = "My Custom Controller Name")
 @RequestMapping(value = "/ambulance")
+//@Api(value = "ExampleController", description = "Operations related to example")
+
 public class SimpleAmbulanceController {
 
     @Autowired
