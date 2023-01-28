@@ -4,6 +4,11 @@ package com.aggregator.apiassignment.ambulance.controller;
 import com.aggregator.apiassignment.ambulance.model.Ambulance;
 import com.aggregator.apiassignment.ambulance.model.dtos.AmbulancesDto;
 import com.aggregator.apiassignment.ambulance.model.services.AmbulanceService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +29,15 @@ public class SimpleAmbulanceController {
     @Autowired
     AmbulanceService ambulanceService;
 
-    @PostMapping(value = "")
-    public String ping(){
-        return "Ambulance controller class is working fine ";
-    }
 
 
+    @Operation(summary = "Get Ambulance List")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of ambulances",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Ambulance.class))
+                    })
+    })
     @GetMapping(value = "/list")
     public ResponseEntity<Iterable<Ambulance>> ambulanceList(){
         Iterable<Ambulance> ambulanceList = ambulanceService.getAmbulanceList();
